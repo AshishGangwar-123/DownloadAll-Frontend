@@ -1,7 +1,7 @@
 // Configure backend URL dynamically (if running on localhost, use local port 8000, otherwise use your deployed backend)
 const BACKEND_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://127.0.0.1:8000"
-    : "https://downloadall-thatyouwant.onrender.com"; // REPLACE with your actual deployed Render backend URL if changed
+    : "https://downloadall-backend.onrender.com"; // REPLACE with your actual deployed Render backend URL if changed
 
 // This function handles the form submission when a user tries to download a video
 async function handleFormSubmit(event) {
@@ -70,14 +70,14 @@ async function handleFormSubmit(event) {
             // Convert response stream to blob
             const blob = await response.blob();
             const downloadUrl = window.URL.createObjectURL(blob);
-            
+
             // Create a temporary link and trigger download
             const tempLink = document.createElement("a");
             tempLink.href = downloadUrl;
             tempLink.download = filename;
             document.body.appendChild(tempLink);
             tempLink.click();
-            
+
             // Clean up temporary elements and URL
             document.body.removeChild(tempLink);
             window.URL.revokeObjectURL(downloadUrl);
@@ -85,7 +85,7 @@ async function handleFormSubmit(event) {
             // Display success message
             successMessage.innerText = `"${filename}" has been successfully downloaded!`;
             successState.classList.remove("hidden");
-            
+
             // Clear the input field and reset dropdown
             urlInput.value = "";
             resetDropdownOptions();
@@ -231,17 +231,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
-        
+
         // Show the native browser install dialog
         deferredPrompt.prompt();
-        
+
         // Check the user response
         const { outcome } = await deferredPrompt.userChoice;
         console.log(`User response to PWA prompt: ${outcome}`);
-        
+
         // Reset the prompt variable (it can only be used once)
         deferredPrompt = null;
-        
+
         // Hide the install banner
         if (installBanner) {
             installBanner.classList.add('hidden');
