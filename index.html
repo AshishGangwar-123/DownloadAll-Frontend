@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Download YouTube videos instantly with our fast, free, and beautiful dark-themed Video Downloader.">
+    <title>DownloadAll - Modern All Platforms Video Downloader</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <meta name="theme-color" content="#6366f1">
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-decorations">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <main class="downloader-container">
+        <header class="downloader-header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">DownloadAll</span>
+            </div>
+            <h1>Just Drop Your URL and Download Videos Instantly</h1>
+            <p class="subtitle">Enter a video URL below to download it directly to your device.</p>
+
+            <!-- PWA Install Banner -->
+            <div id="installBanner" class="install-banner hidden">
+                <div class="install-content">
+                    <span class="install-icon">📱</span>
+                    <span class="install-text">Install DownloadAll for a faster experience!</span>
+                </div>
+                <button id="installBtn" class="install-btn">Install App</button>
+            </div>
+        </header>
+
+        <section class="downloader-card">
+            <!-- Form for URL input -->
+            <form id="downloadForm" onsubmit="handleFormSubmit(event)">
+                <div class="input-group">
+                    <label for="youtubeUrl" class="sr-only"> Video URL</label>
+                    <span class="input-icon">🔗</span>
+                    <input type="url" id="youtubeUrl"
+                        placeholder="Paste URL here... (e.g. https://youtube.com/watch?v=...)" required
+                        autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="formatSelect" class="sr-only">Choose Format / Quality</label>
+                    <span class="input-icon">⚙️</span>
+                    <select id="formatSelect" required>
+                        <option value="best">MP4 - Best Quality</option>
+                        <option value="1080">MP4 - 1080p</option>
+                        <option value="720">MP4 - 720p</option>
+                        <option value="480">MP4 - 480p</option>
+                        <option value="360">MP4 - 360p</option>
+                        <option value="144">MP4 - 144p</option>
+                        <option value="mp3">MP3 - Audio Only</option>
+                    </select>
+                </div>
+                <button type="submit" id="downloadBtn">
+                    <span class="btn-text">Download Video</span>
+                    <span class="btn-icon">⬇️</span>
+                </button>
+            </form>
+
+            <!-- Status Areas -->
+            <div class="status-container">
+                <!-- Loading State (Hidden by default) -->
+                <div id="loadingState" class="status-box loading-box hidden">
+                    <div class="spinner"></div>
+                    <span id="loadingMessage">Processing your video... Please wait.</span>
+                </div>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successState" class="status-box success-box hidden">
+                    <div class="status-icon">✅</div>
+                    <div class="message-content">
+                        <h3>Success!</h3>
+                        <p id="successMessage"></p>
+                    </div>
+                </div>
+
+                <!-- Error Message (Hidden by default) -->
+                <div id="errorState" class="status-box error-box hidden">
+                    <div class="status-icon">⚠️</div>
+                    <div class="message-content">
+                        <h3>Oops, something went wrong</h3>
+                        <p id="errorMessage"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supported Platforms Section -->
+        <section class="platforms-card">
+            <header class="platforms-header">
+                <h2>🚀 Supports 1000+ Websites</h2>
+                <p>Download video and audio from popular platforms instantly</p>
+            </header>
+
+            <div class="platforms-grid">
+                <div class="platform-category">
+                    <h3>📹 Video Sharing</h3>
+                    <div class="tags-container">
+                        <span class="tag">YouTube</span>
+                        <span class="tag">YouTube Shorts</span>
+                        <span class="tag">YouTube Music</span>
+                        <span class="tag">Vimeo</span>
+                        <span class="tag">Dailymotion</span>
+                        <span class="tag">Streamable</span>
+                        <span class="tag">Veoh</span>
+                    </div>
+                </div>
+
+                <div class="platform-category">
+                    <h3>💬 Social Media</h3>
+                    <div class="tags-container">
+                        <span class="tag">Instagram</span>
+                        <span class="tag">Instagram Reels</span>
+                        <span class="tag">TikTok</span>
+                        <span class="tag">X (Twitter)</span>
+                        <span class="tag">Facebook</span>
+                        <span class="tag">Reddit</span>
+                        <span class="tag">LinkedIn</span>
+                        <span class="tag">Pinterest</span>
+                        <span class="tag">Tumblr</span>
+                    </div>
+                </div>
+
+                <div class="platform-category">
+                    <h3>🎮 Live & Alternative Video</h3>
+                    <div class="tags-container">
+                        <span class="tag">Twitch</span>
+                        <span class="tag">Kick</span>
+                        <span class="tag">Rumble</span>
+                        <span class="tag">Trovo</span>
+                        <span class="tag">Bilibili</span>
+                        <span class="tag">NicoNico</span>
+                        <span class="tag">Odysee</span>
+                        <span class="tag">PeerTube</span>
+                        <span class="tag">BitChute</span>
+                    </div>
+                </div>
+
+                <div class="platform-category">
+                    <h3>🎵 Audio & Podcasts</h3>
+                    <div class="tags-container">
+                        <span class="tag">SoundCloud</span>
+                        <span class="tag">Bandcamp</span>
+                        <span class="tag">Mixcloud</span>
+                        <span class="tag">Audiomack</span>
+                    </div>
+                </div>
+
+                <div class="platform-category">
+                    <h3>🎓 Education & Professional</h3>
+                    <div class="tags-container">
+                        <span class="tag">TED</span>
+                        <span class="tag">Khan Academy</span>
+                        <span class="tag">Coursera</span>
+                        <span class="tag">edX</span>
+                        <span class="tag">MIT OCW</span>
+                        <span class="tag">Udemy</span>
+                        <span class="tag">Loom</span>
+                        <span class="tag">Wistia</span>
+                        <span class="tag">Brightcove</span>
+                        <span class="tag">Kaltura</span>
+                        <span class="tag">JW Player</span>
+                    </div>
+                </div>
+
+                <div class="platform-category">
+                    <h3>🌐 General Platforms</h3>
+                    <div class="tags-container">
+                        <span class="tag">News & Media</span>
+                        <span class="tag">Live Streaming</span>
+                        <span class="tag">Educational Sites</span>
+                        <span class="tag">Podcast Channels</span>
+                        <span class="tag">Adult Content Sites</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="downloader-footer">
+            <p>Made with 💖 for high-quality downloads. Please respect creators' copyrights.</p>
+        </footer>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
